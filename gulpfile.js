@@ -10,7 +10,7 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify');
 
 
-var url = 'http://localhost/matt-grim';
+var url = 'http://localhost/hire-pro-to-go';
 
 gulp.task('watch', function () {
   browserSync.init({

@@ -13,6 +13,8 @@ function theme_files()
   wp_enqueue_style('FontAwes', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
 
   /* fonts */
+  wp_enqueue_style('Bebas', 'https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
+  wp_enqueue_style('Work Sans', 'https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&display=swap');
   
 }
 
