@@ -1,0 +1,66 @@
+footer {
+  background: #000;
+
+  .red-grad {
+    background: linear-gradient(180deg, transparent, rgba(70, 69, 45, .74));
+    padding: 3.2% 0;
+
+  }
+
+  .row {
+    justify-content: space-between;
+
+    .image-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+
+      img {
+        width: 100%;
+        max-width: 228px;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        color: #fff;
+        font-size: 1.25em;
+        line-height: 30px;
+
+        a {
+          color: #fff;
+          @extend %text-hover;
+        }
+      }
+    }
+
+    .contact-info {
+      text-align: right;
+    }
+  }
+
+  .footer-bottom {
+    background-color: #398555;
+    padding: 5px 0;
+
+    .brace {
+      text-align: right;
+    }
+
+    p {
+      margin: 0;
+      color: #fff;
+      font-size: 1.25em;
+
+      a {
+        color: #fff;
+        @extend %text-hover;
+      }
+    }
+  }
+}

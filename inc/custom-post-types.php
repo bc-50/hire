@@ -1,15 +1,15 @@
 <?php
 
-/* function testimonial_post_type_func() {
-  // Testimonial Post Type
-  register_post_type('Testimonial', array(
+function pack_post_type_func() {
+  // Pack Post Type
+  register_post_type('pack', array(
     //Most of the visual stuff in labels array
       'labels' => array(
-        'name' => 'Testimonials',
-        'add_new_item' => 'Add New Testimonial',
-        'edit_item' => 'Edit Testimonials',
-        'all_items' => 'All Testimonials',
-        'singular_name' => 'Testimonial'
+        'name' => 'Packs',
+        'add_new_item' => 'Add New Pack',
+        'edit_item' => 'Edit Packs',
+        'all_items' => 'All Packs',
+        'singular_name' => 'Pack'
       ),
       'supports' => array('title', 'editor', 'excerpt'),
       'public' => true,
@@ -19,4 +19,4 @@
     ));
   }
   
-  add_action( 'init', 'testimonial_post_type_func' ); */
+  add_action( 'init', 'pack_post_type_func' );

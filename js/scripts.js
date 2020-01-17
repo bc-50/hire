@@ -19,12 +19,44 @@ $(function () {
         $(this).removeClass('show');
       }
     });
-
     $(ans).addClass('show');
-
-    console.log(e.target);
-    console.log($(ans));
   });
 
+  function load_pack(id) {
+    var data = {
+      action: "change_pack_ajax",
+      pid: id,
+    };
 
+    $.ajax({
+      type: "POST",
+      dataType: "html",
+      url: ajax_posts.ajaxurl,
+      data: data,
+      success: function (data) {
+        var $data = $(data);
+        $("#package-info").html('');
+        $("#package-info").append($data);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(
+          jqXHR.getAllResponseHeaders() +
+          " :: " +
+          textStatus +
+          " :: " +
+          errorThrown
+        );
+      }
+    });
+    return false;
+  }
+
+  $('.pack-choice').click(function (e) {
+    if ($(e.target).hasClass('pack-choice')) {
+      var target = $(e.target);
+    } else {
+      var target = $(e.target).parents('.pack-choice');
+    }
+    load_pack($(target).data('id'));
+  });
 });

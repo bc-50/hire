@@ -2,13 +2,13 @@
 function cta_func($atts, $content = null){
   $r = '';
   extract( shortcode_atts( array(
-    'title' => null,
+    'type' => '',
   ), $atts ) );
   $r ='
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-11">
-          <div class="cta">
+          <div class="cta '. $type .'">
             '. wpautop($content) .'
           </div>
         </div>
@@ -32,6 +32,15 @@ function cta_map()
       'holder' => 'p',
       'heading' => __( 'Content', 'my-text-domain' ),
       'param_name' => 'content',
+    ),
+    array(
+      'type' => 'dropdown',
+      'heading' => __( 'CTA Type', 'my-text-domain' ),
+      "value" => array(
+        'Normal' => '',
+        'Alternate' => 'alt',
+      ),
+      'param_name' => 'type',
     ),
   )));
 }

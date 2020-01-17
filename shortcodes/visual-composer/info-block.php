@@ -8,7 +8,8 @@ function info_box_func($atts, $content = null){
     'link' => null,
     'check' => 'yes',
     'link_box' => 'no',
-    'link_bx' => null
+    'link_bx' => null,
+    'cl1' => null,
   ), $atts ) );
 
   $image_src = wp_get_attachment_image_src($img, 'full');
@@ -28,12 +29,12 @@ function info_box_func($atts, $content = null){
   ob_start()
   ?>
     <?php echo $link_box == "yes" ? '<a href="'. $b_link .'" style="text-decoration: none">' : '' ?>
-   <div  <?php echo $check == "yes" ? 'class="toggle-content"' : '' ?> style="background-image: linear-gradient( rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(<?php echo $image_src[0] ?>)">
+   <div  class="toggle <?php echo $check == "yes" ? 'toggle-content' : 'no-toggle' ?>" style="background-image: linear-gradient( <?php echo $cl1 ?>,<?php echo $cl1 ?>), url(<?php echo $image_src[0] ?>)">
       <section class="light-box">
           <?php if (isset($title)) { ?>
             <div class="title">
-              <h2><?php echo $title ?></h3>
-              <h3><?php echo $stitle ?></h3>
+              <?php echo $title ? '<h2>'. $title .'</h2>' : ''?>
+              <?php echo $stitle ? '<h3>'. $stitle .'</h3>' : ''?>
             </div>
           <?php } ?>
       </section>
@@ -53,8 +54,8 @@ function info_box_func($atts, $content = null){
             <?php } ?>
           </div>
         </section>
+        <?php } ?>
       </div>
-    <?php } ?>
     <?php echo $link_box == "yes"? '</a>' : '' ?>
   
   <?php
@@ -89,6 +90,11 @@ function info_box_map()
       "holder" => "img",
       'heading' => __( 'Background Image', 'my-text-domain' ),
       'param_name' => 'img',
+    ),
+    array(
+      'type' => 'colorpicker',
+      'heading' => __( 'Back Ground Overlay Color', 'my-text-domain' ),
+      'param_name' => 'cl1',
     ),
     array(
       'type' => 'dropdown',

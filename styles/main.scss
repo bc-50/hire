@@ -10,14 +10,8 @@
   background-size: cover;
   background-position: center;
 
-  .light-box {
-    transition: all .5s ease;
-  }
-
   .reveal-box {
-    position: relative;
-    transition: all .5s ease;
-    opacity: 0;
+    display: block;
   }
 
   &:hover {
@@ -36,7 +30,6 @@
   }
 
   .light-box {
-    min-height: 100%;
     position: absolute;
     width: 100%;
     left: 0;
@@ -45,10 +38,27 @@
   }
 }
 
+.no-toggle {
+  padding-top: 100%;
+  max-height: 400px;
+  height: 100%;
+}
+
+.toggle {
+  background-size: cover;
+  background-position: center;
+}
+
+.pack-choice {
+  cursor: pointer;
+}
+
 .light-box {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  transition: all .5s ease;
+  min-height: 100%;
 
   .title {
     text-align: center;
@@ -72,6 +82,11 @@
 }
 
 .reveal-box {
+  position: relative;
+  transition: all .5s ease;
+  opacity: 0;
+  display: none;
+
   .inner-wrapper {
     display: flex;
     flex-direction: column;
@@ -116,7 +131,7 @@
     }
 
     .button-wrapper {
-      @include button(#fff);
+      @include button(#fff, #000);
       margin: 9% 0;
     }
   }
@@ -183,4 +198,72 @@
     font-size: 1.5em;
     color: #308653;
   }
+
+  &.alt {
+    a {
+      color: #fff;
+    }
+  }
+}
+
+.pack-info {
+  .pack-column {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .product-info {
+    max-width: 570px;
+
+    .title-wrapper {
+      margin: 20px 0;
+
+      h2 {
+        font-size: 2.81em;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1.5em;
+        letter-spacing: 0.03em;
+        line-height: 28px;
+        margin: 0;
+      }
+    }
+
+    .hire-rates {
+
+      .top {
+        background-color: #398555;
+
+        h3 {
+          font-size: 1.75em;
+          line-height: 36px;
+          color: #fff;
+          margin: 0;
+          text-align: center;
+        }
+      }
+
+      .rates {
+        background-color: rgba(0, 0, 0, .83);
+
+        p {
+          font-size: 1.25em;
+          line-height: 36px;
+          color: #fff;
+        }
+
+        .h-row {
+          display: flex;
+          justify-content: space-between;
+
+          p {
+            font-size: 1.75em;
+          }
+        }
+      }
+    }
+  }
+
 }

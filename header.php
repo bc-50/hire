@@ -7,11 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php wp_head(); ?>
 </head>
-
 <body>
-
-<header>
- <div class="container-fluid">
+<header class=" <?php echo !is_front_page() ? 'small' : '' ?>">
+ <div class="container-fluid header-container">
   <div class="row">
     <div class="col-3 head-col" style="background-image: linear-gradient(rgba(70,131,89,.8), rgba(70,131,89,.8)), url(<?php echo get_theme_file_uri('imgs/head-img-left.jpg') ?>)">
       <div class="header-left">
