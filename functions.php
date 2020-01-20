@@ -82,45 +82,52 @@ function brace_autoload_shortcodes(){
     $time = array();
     $price = array();
 
-    foreach ($pack->get_available_variations() as $var) {
+    foreach ($variations as $var) {
       array_push($time, $var['attributes']['attribute_hire-rates']);
-      array_push($price, $var['display_regular_price']);
+      $val = $var['display_regular_price'];
+      if (is_numeric( $val ) && floor( $val ) != $val) {
+        array_push($price, $val);
+      }else{
+        $val = $val . ".00";
+        array_push($price, $val);
+      }
     }
     $out = '
     
   
-    <div id="info" class="pack-info">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-5 pack-column" style="background-image: linear-gradient( '. $color_l .','. $color_l .'), url('. $bg_left['left_image'] .')"></div>
-          <div class="col-lg-7 pack-column" style="background-image: linear-gradient( '. $color_r .','. $color_r .'), url('. $bg_right['right_image'] .')">
-            <div class="product-info">
-              <div class="title-wrapper">
-                <h2>'. get_the_title($id) .'</h2>
-                '. wpautop($pack->get_description()) .'
-              </div>
-              <div class="hire-rates">
-                <div class="top">
-                  <h3>Hire Rates</h3>
+      <div id="info" class="pack-info">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-5 pack-column" style="background-image: linear-gradient( '. $color_l .','. $color_l .'), url('. $bg_left['left_image'] .')"></div>
+            <div class="col-lg-7 pack-column" style="background-image: linear-gradient( '. $color_r .','. $color_r .'), url('. $bg_right['right_image'] .')">
+              <div class="product-info">
+                <div class="title-wrapper">
+                  <h2>'. get_the_title($id) .'</h2>
+                  '. wpautop($pack->get_description()) .'
                 </div>
-                <div class="rates">';
-                  for ($i=count($time)-1; $i > -1; $i--) { 
-                    $out .= '<div class="h-row">
-                      <p>'. $time[$i] .'</p>
-                      <p>'. $price[$i] .'</p>
-                    </div>';
-                  }
-                    $out .= '</div>
-                <p>Discount rates for longer term hires</p>
-                <div class="g-button-wrapper">
-                  <a href="#">Hire Now</a>
+                <div class="hire-rates">
+                  <div class="top">
+                    <h3>Hire Rates</h3>
+                  </div>
+                  <div class="rates">';
+                    for ($i=count($time)-1; $i > -1; $i--) { 
+                      $out .= '<div class="h-row">
+                        <p>'. $time[$i] .'</p>
+                        <p>£'. $price[$i] .'</p>
+                      </div>';
+                    }
+                      $out .= '
+                    <p class="discount">Discount rates for longer term hires</p>
+                  </div>
+                  <div class="g-button-wrapper">
+                    <a href="#">Hire Now</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>    
+      </div> 
     ';
 
     die($out);

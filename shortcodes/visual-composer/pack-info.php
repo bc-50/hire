@@ -20,9 +20,15 @@ function pack_info_func($atts, $content = null){
   $time = array();
   $price = array();
 
-  foreach ($pack->get_available_variations() as $var) {
+  foreach ($variations as $var) {
     array_push($time, $var['attributes']['attribute_hire-rates']);
-    array_push($price, $var['display_regular_price']);
+    $val = $var['display_regular_price'];
+    if (is_numeric( $val ) && floor( $val ) != $val) {
+      array_push($price, $val);
+    }else{
+      $val = $val . ".00";
+      array_push($price, $val);
+    }
   }
   ?>
 
@@ -48,7 +54,7 @@ function pack_info_func($atts, $content = null){
                       <p>£<?php echo $price[$i] ?></p>
                     </div>
                   <?php } ?>
-                  <p>Discount rates for longer term hires</p>
+                  <p class="discount">Discount rates for longer term hires</p>
                 </div>
                 <div class="g-button-wrapper">
                   <a href="#">Hire Now</a>

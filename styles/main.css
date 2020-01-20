@@ -378,7 +378,7 @@ div.gform_wrapper .gform_footer input[type=submit] {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   min-height: 100%; }
   .light-box .title {
     text-align: center;
@@ -389,7 +389,7 @@ div.gform_wrapper .gform_footer input[type=submit] {
       letter-spacing: 0.02em;
       text-transform: uppercase; }
     .light-box .title h3 {
-      color: #21DD76;
+      color: #21dd76;
       font-size: 1.75em;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -397,7 +397,7 @@ div.gform_wrapper .gform_footer input[type=submit] {
 
 .reveal-box {
   position: relative;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   opacity: 0;
   display: none; }
   .reveal-box .inner-wrapper {
@@ -510,34 +510,56 @@ div.gform_wrapper .gform_footer input[type=submit] {
   background-size: cover;
   background-position: center; }
 
-.pack-info .product-info {
-  max-width: 570px; }
-  .pack-info .product-info .title-wrapper {
-    margin: 20px 0; }
-    .pack-info .product-info .title-wrapper h2 {
+.product-info {
+  max-width: 570px;
+  padding: 7% 0 7% 7.5%; }
+  .product-info .title-wrapper {
+    margin: 0 0 20px 0; }
+    .product-info .title-wrapper h2 {
       font-size: 2.81em;
       margin-bottom: 10px; }
-    .pack-info .product-info .title-wrapper p {
+    .product-info .title-wrapper p {
       font-size: 1.5em;
       letter-spacing: 0.03em;
       line-height: 28px;
       margin: 0; }
-  .pack-info .product-info .hire-rates .top {
-    background-color: #398555; }
-    .pack-info .product-info .hire-rates .top h3 {
+  .product-info .hire-rates .top {
+    background-color: #398555;
+    padding: 3.5%; }
+    .product-info .hire-rates .top h3 {
       font-size: 1.75em;
       line-height: 36px;
       color: #fff;
       margin: 0;
       text-align: center; }
-  .pack-info .product-info .hire-rates .rates {
-    background-color: rgba(0, 0, 0, 0.83); }
-    .pack-info .product-info .hire-rates .rates p {
+  .product-info .hire-rates .rates {
+    background-color: rgba(0, 0, 0, 0.83);
+    padding: 5em 3.375em 2.25em; }
+    .product-info .hire-rates .rates p {
       font-size: 1.25em;
       line-height: 36px;
       color: #fff; }
-    .pack-info .product-info .hire-rates .rates .h-row {
+    .product-info .hire-rates .rates .h-row {
       display: flex;
       justify-content: space-between; }
-      .pack-info .product-info .hire-rates .rates .h-row p {
+      .product-info .hire-rates .rates .h-row p {
         font-size: 1.75em; }
+        .product-info .hire-rates .rates .h-row p:not(.discount) {
+          margin-bottom: 10px; }
+  .product-info .hire-rates .g-button-wrapper {
+    margin: 2.5em 0 0; }
+
+#product-slider {
+  margin-top: 20px; }
+  #product-slider .carousel-inner .carousel-item .image-half {
+    max-width: 445px;
+    margin-left: auto; }
+    #product-slider .carousel-inner .carousel-item .image-half .title-wrapper h2 {
+      font-size: 2.81em;
+      line-height: 36px; }
+    #product-slider .carousel-inner .carousel-item .image-half .main-image {
+      margin: 9% 0; }
+      #product-slider .carousel-inner .carousel-item .image-half .main-image .image-wrapper img {
+        max-width: 100%; }
+    #product-slider .carousel-inner .carousel-item .image-half .mini-images img {
+      max-width: 100%; }

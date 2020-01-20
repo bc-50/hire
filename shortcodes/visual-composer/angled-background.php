@@ -4,11 +4,12 @@ function nested_container_func($atts, $content = null){
   extract( shortcode_atts( array(
     'color1' => null,
     'color2' => null,
+    'angle' => null,
     'css' => null,
   ), $atts ) );
   $css_class = apply_filters( VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, vc_shortcode_custom_css_class( $css, ' ' ), 'nested_container', $atts );
   $r='
-  <div class="angled-background '. esc_attr( $css_class ) .'" style="background: linear-gradient(-12deg, '. $color1 .' 49.8%, '. $color2 .' 50%)">
+  <div class="angled-background '. esc_attr( $css_class ) .'" style="background: linear-gradient('. $angle .'deg, '. $color1 .' 49.8%, '. $color2 .' 50%)">
     '. do_shortcode($content) .'
   </div>
   ';
@@ -19,7 +20,7 @@ add_action('vc_before_init', 'nested_container_map');
 function nested_container_map()
 {
   vc_map(array(
-    'name' => __('Container', 'my-text-domain'),
+    'name' => __('Angled Background', 'my-text-domain'),
     'base' => 'nested_container',
     /* "as_parent" => array('only' => 'plain_content'), */
     "content_element" => true,
@@ -29,6 +30,12 @@ function nested_container_map()
     'category' => __( 'Brace Elements', 'my-text-domain'),
     'icon' => get_template_directory_uri().'/shortcodes/visual-composer/vc-brace-icon.png',
     'params' => array(
+    array(
+      'type' => 'textfield',
+      'heading' => __( 'Angle', 'my-text-domain' ),
+      'description' => __( 'Angle in deg', 'my-text-domain' ),
+      'param_name' => 'angle',
+    ),
     array(
       'type' => 'colorpicker',
       'heading' => __( 'Color 1', 'my-text-domain' ),
