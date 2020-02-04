@@ -23,13 +23,15 @@ function theme_files()
 function all_packs(){
   $packs = new WP_Query(array(
     'post_type' => 'product',
-    'product_cat' => 'pack',
   ));
   $args = array();
   
   foreach ($packs->posts as $single) {
-    $name = ucwords(str_replace('-', ' ',$single->post_name));
-    $args[$name] = $single->ID;
+    $the_product = wc_get_product( $single->ID );
+    if ($the_product->is_type( 'bundle' )) {
+      $name = ucwords(str_replace('-', ' ',$single->post_name));
+      $args[$name] = $single->ID;
+    }
   }
   wp_reset_postdata();
   return $args;
@@ -43,11 +45,11 @@ function extra_theme_support()
     'primary' => __('Primary Menu')
   ));
   add_theme_support( 'title-tag' );
+  add_theme_support( 'post-thumbnails' );
 }
 
 add_action('after_setup_theme', 'extra_theme_support');
 
-add_theme_support( 'post-thumbnails' );
 
 add_action('init', 'brace_autoload_shortcodes', 1);
 function brace_autoload_shortcodes(){
@@ -63,12 +65,31 @@ function brace_autoload_shortcodes(){
     }
   }
 
+  function get_the_pack($id){
+    $bundle_items = WC_PB_DB::query_bundled_items( array(
+      'return'    => 'all',
+      'bundle_id' => array( $id )
+    ));
+  
+    foreach ($bundle_items as $item) {
+      $terms = wp_get_post_terms( $item['product_id'], 'product_cat' );
+      foreach ( $terms as $term ) $categories[] = $term->slug;
+      if (in_array( 'pack', $categories  )) {
+        $pack = wc_get_product( $item['product_id'] );
+      }
+      $categories = array();
+    }
+
+    return $pack;
+  }
 
   function change_pack_ajax(){
     
-    $id = (isset($_POST["pid"])) ? $_POST["pid"] : 0;
+    $bundle_id = (isset($_POST["pid"])) ? $_POST["pid"] : 0;
 
     header("Content-Type: text/html");
+
+    $id = get_the_pack($bundle_id)->get_id();
 
     $pack = wc_get_product( $id );
     $bg_left = get_field('left', $id);
@@ -102,7 +123,7 @@ function brace_autoload_shortcodes(){
             <div class="col-lg-7 pack-column" style="background-image: linear-gradient( '. $color_r .','. $color_r .'), url('. $bg_right['right_image'] .')">
               <div class="product-info">
                 <div class="title-wrapper">
-                  <h2>'. get_the_title($id) .'</h2>
+                  <h2>'. get_the_title($bundle_id) .'</h2>
                   '. wpautop($pack->get_description()) .'
                 </div>
                 <div class="hire-rates">
@@ -120,7 +141,7 @@ function brace_autoload_shortcodes(){
                     <p class="discount">Discount rates for longer term hires</p>
                   </div>
                   <div class="g-button-wrapper">
-                    <a href="#">Hire Now</a>
+                    '. woocommerce_template_loop_add_to_cart_button(array(), $bundle_id) .'
                   </div>
                 </div>
               </div>
@@ -153,3 +174,47 @@ function brace_autoload_shortcodes(){
     $b = hexdec( $b );
     return array( 'red' => $r, 'green' => $g, 'blue' => $b );
 }
+
+function woocommerce_template_loop_add_to_cart_button( $args = array(), $id ) {
+  $product = wc_get_product( $id );
+
+  if ( $product ) {
+    $defaults = array(
+      'quantity'   => 1,
+      'class'      => implode(
+        ' ',
+        array_filter(
+          array(
+            'button',
+            'product_type_' . $product->get_type(),
+            $product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+            $product->supports( 'ajax_add_to_cart' ) && $product->is_purchasable() && $product->is_in_stock() ? 'ajax_add_to_cart' : '',
+          )
+        )
+      ),
+      'attributes' => array(
+        'data-product_id'  => $product->get_id(),
+        'data-product_sku' => $product->get_sku(),
+        'aria-label'       => $product->add_to_cart_description(),
+        'rel'              => 'nofollow',
+      ),
+    );
+
+    $args = apply_filters( 'woocommerce_loop_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
+
+    if ( isset( $args['attributes']['aria-label'] ) ) {
+      $args['attributes']['aria-label'] = wp_strip_all_tags( $args['attributes']['aria-label'] );
+    }
+
+    return apply_filters( 'woocommerce_loop_add_to_cart_link', // WPCS: XSS ok.
+    sprintf( '<a href="%s" data-quantity="%s" class="%s" %s>Hire Now</a>',
+      esc_url( $product->add_to_cart_url() ),
+      esc_attr( isset( $args['quantity'] ) ? $args['quantity'] : 1 ),
+      esc_attr( isset( $args['class'] ) ? $args['class'] : 'button' ),
+      isset( $args['attributes'] ) ? wc_implode_html_attributes( $args['attributes'] ) : '',
+      esc_html( $product->add_to_cart_text() )
+    ),
+    $product, $args );
+  }
+}
+

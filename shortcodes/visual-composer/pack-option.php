@@ -8,7 +8,6 @@ function pack_block_func($atts, $content = null){
     'cl1' => null,
     'packs' => array_shift(array_values(all_packs())),
   ), $atts ) );
-
   $image_src = wp_get_attachment_image_src($img, 'full');
   ob_start()
   ?>

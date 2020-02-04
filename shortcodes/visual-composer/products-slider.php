@@ -21,20 +21,22 @@ function products_sliders_func($atts, $content = null){
         while ($products->have_posts()) {
           $products->the_post();
           $the_product = wc_get_product( get_the_ID() );
-          $variations = $the_product->get_available_variations();
-          $mini_images = $the_product->get_gallery_image_ids();
-          $time = array();
-          $price = array();
-          foreach ($variations as $var) {
-            array_push($time, $var['attributes']['attribute_hire-rates']);
-            $val = $var['display_regular_price'];
-            if (is_numeric( $val ) && floor( $val ) != $val) {
-              array_push($price, $val);
-            }else{
-              $val = $val . ".00";
-              array_push($price, $val);
+          if ( $the_product->is_type( 'variable' ) ) {
+            $variations = $the_product->get_available_variations();
+            $mini_images = $the_product->get_gallery_image_ids();
+            $time = array();
+            $price = array();
+            foreach ($variations as $var) {
+              array_push($time, $var['attributes']['attribute_hire-rates']);
+              $val = $var['display_regular_price'];
+              if (is_numeric( $val ) && floor( $val ) != $val) {
+                array_push($price, $val);
+              }else{
+                $val = $val . ".00";
+                array_push($price, $val);
+              }
             }
-          }
+          
           ?>
           <div class="carousel-item<?php echo $first ? ' active' : '' ?>">
             <div class="container-fluid">
@@ -81,7 +83,7 @@ function products_sliders_func($atts, $content = null){
                         <p class="discount">Discount rates for longer term hires</p>
                       </div>
                       <div class="g-button-wrapper">
-                        <a href="#">Hire Now</a>
+                        <?php echo woocommerce_template_loop_add_to_cart_button(array(), $the_product->get_id()); ?>
                       </div>
                     </div>
                   </div>        
@@ -92,6 +94,7 @@ function products_sliders_func($atts, $content = null){
       <?php
         $first = false;
         }
+      }
       } 
       ?>
     </div>

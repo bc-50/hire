@@ -5,11 +5,11 @@ function pack_info_func($atts, $content = null){
     'default' => array_shift(array_values(all_packs())),
   ), $atts ) );
   ob_start(); 
+ 
+  $pack = get_the_pack($default);
 
-
-  $pack = wc_get_product( $default );
-  $bg_left = get_field('left', $default);
-  $bg_right = get_field('right', $default);
+  $bg_left = get_field('left', $pack->get_id());
+  $bg_right = get_field('right', $pack->get_id());
 
   $cl= hex2rgb($bg_left['overlay']);
   $cr= hex2rgb($bg_right['overlay']);
@@ -57,7 +57,7 @@ function pack_info_func($atts, $content = null){
                   <p class="discount">Discount rates for longer term hires</p>
                 </div>
                 <div class="g-button-wrapper">
-                  <a href="#">Hire Now</a>
+                    <?php echo woocommerce_template_loop_add_to_cart_button(array(), $default); ?>
                 </div>
               </div>
             </div>

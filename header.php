@@ -11,7 +11,7 @@
 <header class=" <?php echo !is_front_page() ? 'small' : '' ?>">
  <div class="container-fluid header-container">
   <div class="row">
-    <div class="col-3 head-col" style="background-image: linear-gradient(rgba(70,131,89,.8), rgba(70,131,89,.8)), url(<?php echo get_theme_file_uri('imgs/head-img-left.jpg') ?>)">
+    <div class="col-3 img-col left" style="background-image: linear-gradient(rgba(70,131,89,.8), rgba(70,131,89,.8)), url(<?php echo get_theme_file_uri('imgs/head-img-left.jpg') ?>)">
       <div class="header-left">
         <div class="logo-wrapper">
         <a href="<?php echo esc_url(site_url()) ?>"><img src="<?php echo get_theme_file_uri('imgs/logo.png') ?>" alt="<?php bloginfo('name') ?> Logo"></a>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="col-9 head-col" style="background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(<?php echo get_theme_file_uri('imgs/head-image.jpg') ?>)">
+    <div class="col-9 img-col right" style="background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(<?php echo get_theme_file_uri('imgs/head-image.jpg') ?>)">
       <div class="header-right">
         <nav class="navbar navbar-expand-lg navbar-light">
           <button class="hamburger hamburger--spring  navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
